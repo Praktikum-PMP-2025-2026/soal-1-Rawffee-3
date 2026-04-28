@@ -49,7 +49,7 @@ int main(){
             scanf("%d", &daftar[N].skor);
             
             N++;
-    int n = sizeof(daftar) / sizeof(org[0]);
+    int n = sizeof(daftar) / sizeof(daftar[0]);
 
     qsort(daftar, n, sizeof(struct penjaga), comparescore);
 
