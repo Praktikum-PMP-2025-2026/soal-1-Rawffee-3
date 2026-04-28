@@ -2,39 +2,42 @@
 #include <string.h>
 #include <stdlib.h>
 
-typedef struct penjaga{
-    char *nama;
+struct penjaga{
+    char nama[100];
     int id;
-    char *shift;
+    char shift[10];
     int skor;
-}penjaga;
+};
 
+int comparescore(const void* a, const void* b)
+{
+    return ((struct penjaga*)a)->skor;
+           - ((struct penjaga*)b)->skor;
+}
 
-int main (){
-    int N =0;
-    int kapasitas;
-    char bufferNama [100];
-    char shift [10];
-
+int main(){
+    int kapasitas = 2; 
+    int N = 0;
     penjaga *daftar = (penjaga *)malloc(kapasitas * sizeof(penjaga));
-
-    if (N == kapasitas) {
+    char bufferNama[100];
+    char shift[10];
+   if (N == kapasitas) {
                 kapasitas *= 2;
                 daftar = (penjaga *)realloc(daftar, kapasitas * sizeof(penjaga));
             }
 
-            //nama
+            printf("Nama Lengkap: ");
             getchar(); 
             fgets(bufferNama, sizeof(bufferNama), stdin);
             bufferNama[strcspn(bufferNama, "\n")] = '\0'; 
 
             daftar[N].nama = (char *)malloc((strlen(bufferNama) + 1) * sizeof(char));
             strcpy(daftar[N].nama, bufferNama);
-            
-            //id
+
+            printf("ID: ");
             scanf("%d", &daftar[N].id);
 
-            //shift
+            printf("SHIFT: ");
             getchar(); 
             fgets(shift, sizeof(shift), stdin);
             shift[strcspn(shift, "\n")] = '\0'; 
@@ -42,14 +45,18 @@ int main (){
             daftar[N].nama = (char *)malloc((strlen(shift) + 1) * sizeof(char));
             strcpy(daftar[N].nama, shift);
 
-            //skor
+            printf("Skor: ");
             scanf("%d", &daftar[N].skor);
             
-            
             N++;
-            printf("%s", &daftar->nama);
+    int n = sizeof(daftar) / sizeof(org[0]);
 
-            free(daftar);
-            return 0;
+    qsort(daftar, n, sizeof(struct penjaga), comparescore);
 
+    for (int i = 0; i < n; i++) {
+        printf("%s, %d, %s, %d", daftar[i].nama,
+               daftar[i].id, daftar[i].shift, daftar[i].skor);
+    }
+
+    return 0;
 }
